@@ -98,11 +98,19 @@ def update_score(assignment,best_assignment) :
 
 #------------------------------------------------------ALGORITHM----------------------------------------------
 def update_assignment(A, best_assignment):
+
+	print()
+	print("Assignments to be updated: ")
+	print()
 	
 	for i in A :
 
-		if i.time_interval == best_assignment.time_interval :
+		if i.time_interval == best_assignment.time_interval and i.valid :
+			print('(', i.time_interval, ' a ', i.event, ')', end = ' ')
 			i.score = update_score(i,best_assignment)
+
+	print()
+	print()
 
   
 
@@ -160,12 +168,20 @@ def greedy_alg(k=3):
 
 def select_assignment():
 
-	return max(A, key=attrgetter('score'))
+	max_assignment = Assignment()
+
+	for i in A :
+
+		if (i.score > max_assignment.score) and i.valid :
+			max_assignment = i
+
+
+	return max_assignment
 
 
 def assign_score() :
 
-	for i  in A :
+	for i in A :
 		i.score = score(i.event, i.time_interval, S+[i])
 
 
